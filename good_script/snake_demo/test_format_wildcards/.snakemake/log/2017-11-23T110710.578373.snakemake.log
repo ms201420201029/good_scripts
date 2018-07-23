@@ -1,0 +1,5 @@
+Building DAG of jobs...
+MissingInputException in line 1 of /data_center_08/Project/yesx/Soft/snakemake/tests/test_format_wildcards/Snakefile:
+Missing input files for rule all:
+foo.txt
+123.txt

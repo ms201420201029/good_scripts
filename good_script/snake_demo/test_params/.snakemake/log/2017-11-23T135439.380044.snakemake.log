@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	a
+	1	b
+	2
+
+rule b:
+    output: somedir/txt/test.out
+    jobid: 1
+    wildcards: dir=somedir
+
+Error in rule b:
+    jobid: 1
+    output: somedir/txt/test.out
+
+RuleException:
+CalledProcessError in line 12 of /data_center_08/Project/yesx/Soft/snakemake/tests/test_params/Snakefile:
+Command ' set -euo pipefail;  rm -r somedir; mkdir -p somedir; touch -f somedir/txt/test.out; ' returned non-zero exit status 1.
+  File "/data_center_08/Project/yesx/Soft/snakemake/tests/test_params/Snakefile", line 12, in __rule_b
+  File "/home/yesx/miniconda3/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2017-11-23T135439.380044.snakemake.log

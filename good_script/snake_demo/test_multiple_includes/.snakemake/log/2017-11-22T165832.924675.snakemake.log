@@ -1,0 +1,3 @@
+WorkflowError in line 1 of /data_center_08/Project/yesx/Soft/snakemake/tests/test_multiple_includes/Snakefile:
+Failed to open /data_center_08/Project/yesx/Soft/snakemake/tests/test_multiple_includes/test_rule.smk.
+  File "/data_center_08/Project/yesx/Soft/snakemake/tests/test_multiple_includes/Snakefile", line 1, in <module>

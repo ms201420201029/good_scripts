@@ -1,0 +1,33 @@
+Building DAG of jobs...
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	a
+	1	b
+	1	c
+	3
+
+rule a:
+    input: A
+    output: B
+    jobid: 2
+
+Finished job 2.
+1 of 3 steps (33%) done
+
+rule b:
+    input: B
+    output: C
+    jobid: 1
+
+Finished job 1.
+2 of 3 steps (67%) done
+
+rule c:
+    input: C
+    output: D
+    jobid: 0
+
+Finished job 0.
+3 of 3 steps (100%) done

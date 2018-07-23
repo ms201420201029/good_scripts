@@ -1,0 +1,22 @@
+Building DAG of jobs...
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	test_second_rule
+	2
+
+rule test_second_rule:
+    output: test2.txt
+    jobid: 1
+
+Finished job 1.
+1 of 2 steps (50%) done
+
+localrule all:
+    input: test2.txt
+    jobid: 0
+
+Finished job 0.
+2 of 2 steps (100%) done

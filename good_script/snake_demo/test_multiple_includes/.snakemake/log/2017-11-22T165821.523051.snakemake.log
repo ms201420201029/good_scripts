@@ -1,0 +1,4 @@
+AttributeError in line 3 of /data_center_08/Project/yesx/Soft/snakemake/tests/test_multiple_includes/test_second_rule.smk:
+'Rules' object has no attribute 'test_rule'
+  File "/data_center_08/Project/yesx/Soft/snakemake/tests/test_multiple_includes/Snakefile", line 2, in <module>
+  File "/data_center_08/Project/yesx/Soft/snakemake/tests/test_multiple_includes/test_second_rule.smk", line 3, in <module>

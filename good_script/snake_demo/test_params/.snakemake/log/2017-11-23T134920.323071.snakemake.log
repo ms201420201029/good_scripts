@@ -1,0 +1,23 @@
+Building DAG of jobs...
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	1
+	1	2
+	2
+
+rule 2:
+    output: somedir/test.out
+    jobid: 1
+    wildcards: dir=somedir
+
+Finished job 1.
+1 of 2 steps (50%) done
+
+localrule 1:
+    input: somedir/test.out
+    jobid: 0
+
+Finished job 0.
+2 of 2 steps (100%) done

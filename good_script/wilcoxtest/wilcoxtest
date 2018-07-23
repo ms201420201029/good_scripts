@@ -1,0 +1,51 @@
+#!/usr/bin/perl
+print "usage:\nwilcoxtest <profile> <group1_list> <group2_list>\n" and exit unless scalar @ARGV == 3;
+$profile = $ARGV[0];
+$group1 = $ARGV[1];
+$group1 =~ m/(.*).list/;
+$prefix_group1 = $1;
+$group2 = $ARGV[2];
+$group2 =~ m/(.*).list/;
+$prefix_group2 = $1;
+open OUT,">wilcox.test.R";
+print OUT <<_END_;
+library(qvalue);
+profile_name = "$profile";
+group1 = as.vector(t(read.table("$group1",check.names=F)));
+group2 = as.vector(t(read.table("$group2",check.names=F)));
+data = read.table(profile_name,head=TRUE,check.names=F);
+group1_number = which(colnames(data) %in% group1);
+group2_number = which(colnames(data) %in% group2);
+wilcox <- function(arr,grp1_order,grp2_order){
+        test <- wilcox.test(unlist(arr[grp1_order]),unlist(arr[grp2_order]),pair=FALSE,alternative="two.sided");
+        c(test\$p.value,test\$statistic);
+}
+pvalue_statistics = apply(data, 1, wilcox, grp1_order=group1_number, grp2_order=group2_number);
+p_values = pvalue_statistics[1,];
+statistics = pvalue_statistics[2,];
+enrich = rep("$prefix_group1",nrow(data));
+enrich[which(statistics < length(group1_number) * length(group2_number) / 2)] = "$prefix_group2";
+q_values = p.adjust(p_values,method="fdr");
+info = cbind(p_values,q_values,enrich);
+write.table(info,"$profile.p",col.names=FALSE,sep="\\t",quote=FALSE);
+pi0 = qvalue(na.omit(p_values))\$pi0;
+pdf("$profile.p.pdf");
+hist = hist(p_values,probability=TRUE,breaks=50,main="histogram of p values",xlab="p values");
+abline(h=pi0,lty=2);
+power = cumsum(hist\$density-pi0)/50/(1-pi0);
+fdr = pi0*(1:50)/cumsum(hist\$density);
+power = c(0,power);
+fdr = c(0,fdr);
+cex = max(hist\$density);
+lines(x=(0:50)/50,y=power*cex,type="o",pch=4,cex=0.5,col=2,lwd=1);
+lines(x=(0:50)/50,y=fdr*cex,type="o",pch=4,cex=0.5,col=4,lwd=1);
+legend(x=1,y=max(fdr*cex),legend=c("estimate power","estimate fdr"),col=c(2,4),xjust=1,yjust=0,pch=4,lwd=1,pt.cex=0.5,bty="n");
+legend(x=1,y=pi0,legend="Null Hypothesis",xjust=1,yjust=0,bty="n");
+axis(4,at=(0:5)/5*cex,labels=(0:5)/5);
+dev.off();
+_END_
+close OUT;
+open PIPE,"|qsub -cwd -l vf=10g -q all.q -N wilcox.test.R";
+print PIPE "R CMD BATCH wilcox.test.R > wilcox.test.Rout";
+close PIPE;
+

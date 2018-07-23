@@ -1,0 +1,19 @@
+Building DAG of jobs...
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	bench_run
+	1	bench_run_shell
+	1	bench_script
+	1	bench_shell
+	5
+
+rule bench_run:
+    jobid: 4
+    benchmark: test.benchmark_run.txt
+
+Will exit after finishing currently running jobs.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2017-11-24T104607.480909.snakemake.log

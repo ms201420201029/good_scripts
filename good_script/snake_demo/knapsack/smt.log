@@ -1,0 +1,98 @@
+> testing snakemake rule: /data_center_08/Project/yesx/Soft/snakemake/tests/knapsack/Snakefile under: /data_center_08/Project/yesx/Soft/snakemake/tests/knapsack @20171122173347 with other option: 
+
+Building DAG of jobs...
+
+rule cutadapt:
+    input: 3.txt
+    output: 3.fastq
+    jobid: 8
+    reason: Missing output files: 3.fastq
+    wildcards: ds=3
+
+echo hello > 3.fastq
+
+rule cutadapt:
+    input: 1.txt
+    output: 1.fastq
+    jobid: 7
+    reason: Missing output files: 1.fastq
+    wildcards: ds=1
+
+echo hello > 1.fastq
+
+rule cutadapt:
+    input: 2.txt
+    output: 2.fastq
+    jobid: 9
+    reason: Missing output files: 2.fastq
+    wildcards: ds=2
+
+echo hello > 2.fastq
+
+rule gzip:
+    input: 1.fastq
+    output: 1.fastq.gz
+    jobid: 4
+    reason: Missing output files: 1.fastq.gz; Input files updated by another job: 1.fastq
+    wildcards: file=1.fastq
+
+gzip < 1.fastq > 1.fastq.gz
+
+rule gzip:
+    input: 2.fastq
+    output: 2.fastq.gz
+    jobid: 6
+    reason: Missing output files: 2.fastq.gz; Input files updated by another job: 2.fastq
+    wildcards: file=2.fastq
+
+gzip < 2.fastq > 2.fastq.gz
+
+rule gzip:
+    input: 3.fastq
+    output: 3.fastq.gz
+    jobid: 5
+    reason: Missing output files: 3.fastq.gz; Input files updated by another job: 3.fastq
+    wildcards: file=3.fastq
+
+gzip < 3.fastq > 3.fastq.gz
+
+rule bwa_mature:
+    input: 3.fastq.gz
+    output: 3.bam
+    jobid: 2
+    reason: Missing output files: 3.bam; Input files updated by another job: 3.fastq.gz
+    wildcards: ds=3
+
+echo starting with 1 threads; sleep 10; touch 3.bam
+
+rule bwa_mature:
+    input: 1.fastq.gz
+    output: 1.bam
+    jobid: 1
+    reason: Missing output files: 1.bam; Input files updated by another job: 1.fastq.gz
+    wildcards: ds=1
+
+echo starting with 1 threads; sleep 10; touch 1.bam
+
+rule bwa_mature:
+    input: 2.fastq.gz
+    output: 2.bam
+    jobid: 3
+    reason: Missing output files: 2.bam; Input files updated by another job: 2.fastq.gz
+    wildcards: ds=2
+
+echo starting with 1 threads; sleep 10; touch 2.bam
+
+localrule mapmature_all:
+    input: 1.bam, 2.bam, 3.bam
+    jobid: 0
+    reason: Input files updated by another job: 1.bam, 3.bam, 2.bam
+
+Job counts:
+	count	jobs
+	3	bwa_mature
+	3	cutadapt
+	3	gzip
+	1	mapmature_all
+	10
+> local test passed, use bin/smq to submit

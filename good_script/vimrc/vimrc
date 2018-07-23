@@ -1,0 +1,67 @@
+set nocompatible
+set number " 设置显示行号
+filetype on " 
+" colorscheme murphy
+
+syntax on
+set autoindent
+set smartindent
+set shiftwidth=4
+set showmatch
+set vb t_vb=
+set ruler
+set nohls " 默认情况下，寻找匹配是高亮度显示的，该设置关闭高亮显示 
+set incsearch
+
+" 设置补全
+inoremap ( ()
+inoremap [ []
+inoremap { {}
+inoremap < <>
+
+
+set paste " 置粘贴模式，这样粘贴过来的程序代码就不会错位了。
+set pastetoggle=<F3>
+autocmd FileType python setlocal et sta sw=4 sts=4 expandtab
+set backspace=2
+set hlsearch " 高亮搜索的关键字
+set ignorecase " 搜索忽略大小写
+set ruler " 打开光标的行列位置显示功能 
+
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set helplang=cn
+set termencoding=utf-8
+
+syntax enable
+
+hi comment ctermfg=6 " 设置注释的颜色
+
+filetype plugin indent on
+
+syn match out80 /\%80v./ containedin=ALL
+hi out80 guifg=white guibg=red 
+
+set ai! " 设置自动缩进
+" set cindent shiftwidth=4 " 缩进的字符个数
+set cursorline " 行高亮: 所在修改行有下划线
+
+set list
+set listchars=tab:>-,trail:-  "
+set tabstop=4 " 一个tab是4个字符
+
+set laststatus=2 " 设置VIM状态栏
+set statusline+=%f\ " file name
+
+set autoread " 自动重新加载外部修改内容
+" vmap <silent> ,/ y/<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
+" vmap <silent> ,? y?<C-R>=escape(@", '\\/.*$^~[]')<CR><CR>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+rule all:
+    input:
+        "foo.txt",
+        "123.txt"
+
+rule a:
+    output:
+        "{test}.txt"
+    shell:
+        "echo {rule} {wildcards} > {output}"
+

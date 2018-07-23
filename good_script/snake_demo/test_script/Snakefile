@@ -1,0 +1,32 @@
+
+configfile: "config.yaml"
+
+rule all:
+    input:
+        "test.out",
+        "test.html"
+
+
+rule:
+    input:
+        "test.in"
+    output:
+        txt="test.out"
+    params:
+        xy=True
+    script:
+        "scripts/test.R"
+
+rule:
+    output:
+        "test.in"
+    script:
+        "scripts/test.py"
+
+rule:
+    output:
+        "test.html"
+    params:
+        test="testparam"
+    script:
+        "scripts/test.Rmd"

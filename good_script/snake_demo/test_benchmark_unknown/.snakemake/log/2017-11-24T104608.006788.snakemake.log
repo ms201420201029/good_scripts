@@ -1,0 +1,7 @@
+Error in rule bench_run:
+    jobid: 0
+
+WorkflowError:
+Python 3 package psutil needs to be installed to use the benchmarking.
+  File "/home/yesx/miniconda3/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Exiting because a job execution failed. Look above for error message
